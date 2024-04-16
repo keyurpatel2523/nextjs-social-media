@@ -1,0 +1,10 @@
+{
+  "hello": "Hello",
+  "welcome": "Welcome to my Next.js app",
+
+  "key_firebase_email_already_exits_message": "This email already exits",
+  "key_firebase_weak_password_message": "Your password is weak please add valid password",
+  "key_firebase_invalid_credential_message": "Email or Password does not match",
+  "key_forgot_password_success_message": "Please check your email for instructions to reset your password.",
+  "key_firebase_user_not_found_message": "This email address is not associated with us. Please check the email address and try again."
+}
