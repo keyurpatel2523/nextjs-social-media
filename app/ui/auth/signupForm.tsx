@@ -25,9 +25,9 @@ export default function SignupForm() {
       const password = values.get("password");
       const res = await createUserWithEmailAndPassword(auth, email, password);
       console.log({ res });
-      sessionStorage.setItem("user", true);
-      setEmail("");
-      setPassword("");
+      // sessionStorage.setItem("user", true);
+      // setEmail("");
+      // setPassword("");
     } catch (errorMessage: any) {
       MessageHelper.firebaseErrorMessageHandling(errorMessage);
     }
