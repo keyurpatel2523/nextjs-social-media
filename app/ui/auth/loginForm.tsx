@@ -6,10 +6,10 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/app/ui/button";
 import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
-import { auth } from "@/app/lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import MessageHelper from "@/app/utils/messageHelper";
+import { auth } from "@/app/firebase/firebaseAuth";
 
 export default function LoginForm() {
   const handleSignIn = async (values: any) => {
@@ -24,11 +24,6 @@ export default function LoginForm() {
       const user = userCredential.user;
 
       console.log("User signed in:", user);
-
-      //  sessionStorage.setItem("user", true);
-      //  setEmail("");
-      //  setPassword("");
-      //  router.push("/");
     } catch (errorMessage: any) {
       MessageHelper.firebaseErrorMessageHandling(errorMessage);
     }

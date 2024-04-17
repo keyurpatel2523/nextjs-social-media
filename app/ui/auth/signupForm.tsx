@@ -4,30 +4,26 @@ import { lusitana } from "@/app/ui/fonts";
 import {
   AtSymbolIcon,
   KeyIcon,
-  ExclamationCircleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/app/ui/button";
-import { useFormState, useFormStatus } from "react-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { useFormStatus } from "react-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/app/lib/firebase";
 import MessageHelper from "@/app/utils/messageHelper";
+import { addUserWithFirebase } from "@/app/lib/actions";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
+  const router = useRouter();
+
   const handleSignUp = async (values: any) => {
     try {
-      const email = values.get("email");
-      const firstName = values.get("firstName");
-      const lastName = values.get("lastName");
-      const password = values.get("password");
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      console.log({ res });
-      // sessionStorage.setItem("user", true);
-      // setEmail("");
-      // setPassword("");
+      const checkUser = await addUserWithFirebase(values);
+      if (checkUser) {
+        sessionStorage.setItem("userEmail", values.get("email"));
+        router.push("/dashboard");
+      }
     } catch (errorMessage: any) {
       MessageHelper.firebaseErrorMessageHandling(errorMessage);
     }

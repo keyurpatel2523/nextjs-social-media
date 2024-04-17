@@ -1,7 +1,3 @@
-"use client";
-import { useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
 import AcmeLogo from "@/app/ui/acme-logo";
 import SignupForm from "@/app/ui/auth/signupForm";
 

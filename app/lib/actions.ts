@@ -1,9 +1,10 @@
 "use server";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/app/lib/firebase";
-import MessageHelper from "../utils/messageHelper";
 import { sql } from "@vercel/postgres";
+import MessageHelper from "../utils/messageHelper";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebaseAuth";
+const bcrypt = require("bcrypt");
 
 export type State = {
   errors?: {
@@ -17,20 +18,26 @@ export type State = {
   message?: string | null;
 };
 
-export async function addCustomer(firstName: string, lastName: string) {
-  // const { customerId, amount, status } = validatedFields.data;
-  // const amountInCents = amount * 100;
-  // const date = new Date().toISOString().split("T")[0];
-  // try {
-  //   await sql`
-  //     INSERT INTO invoices (customer_id, amount, status, date)
-  //     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-  //   `;
-  // } catch (error) {
-  //   return {
-  //     message: "Database Error: Failed to Create Invoice.",
-  //   };
-  // }
+export async function addUserWithFirebase(values: any) {
+  try {
+    const email = values.get("email");
+    const firstName = values.get("firstName");
+    const lastName = values.get("lastName");
+    const password = values.get("password");
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await sql`
+      INSERT INTO social_users (id, first_name, last_name, email, password)
+      VALUES (${res.user.uid}, ${firstName}, ${lastName}, ${email}, ${hashedPassword})
+    `;
+    return true;
+  } catch (error) {
+    MessageHelper.firebaseErrorMessageHandling(error);
+    console.log("Error", error);
+    return {
+      message: "Database Error: Failed to Create User.",
+    };
+  }
   // revalidatePath("/dashboard/invoices");
   // redirect("/dashboard/invoices");
 }

@@ -1,4 +1,3 @@
-"use client";
 import AcmeLogo from "@/app/ui/acme-logo";
 import LoginForm from "@/app/ui/auth/loginForm";
 
