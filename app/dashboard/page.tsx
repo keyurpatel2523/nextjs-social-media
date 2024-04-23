@@ -1,12 +1,28 @@
 import SideNav from "@/app/ui/dashboard/sidenav";
+import PostList from "../components/PostList";
 
-const Dashboard = ({ children }: any) => {
+const posts = [
+  {
+    id: 1,
+    imageUrl: "https://via.placeholder.com/600",
+    title: "Beautiful Landscape",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    id: 2,
+    videoUrl:
+      "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4",
+    title: "Funny Video",
+    description:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  },
+  // Add more posts as needed
+];
+
+const Dashboard = () => {
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
-        <SideNav />
-      </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+    <div className="container mx-auto py-8">
+      <PostList posts={posts} />
     </div>
   );
 };
