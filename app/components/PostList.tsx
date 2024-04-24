@@ -1,11 +1,12 @@
 import Post from "./Post";
 
 interface PostData {
-  id: number;
-  imageUrl?: string;
-  videoUrl?: string;
-  title: string;
-  description: string;
+  id: string;
+  user_id: string;
+  content_type?: string;
+  content_url?: string;
+  text_content: string;
+  created_at: any;
 }
 
 interface PostListProps {
@@ -18,10 +19,11 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
       {posts.map((post) => (
         <Post
           key={post.id}
-          imageUrl={post.imageUrl}
-          videoUrl={post.videoUrl}
-          title={post.title}
-          description={post.description}
+          imageUrl={post.content_url}
+          videoUrl={post.content_url}
+          title={post.text_content}
+          contentType={post.content_type}
+          description={post.text_content}
         />
       ))}
     </div>

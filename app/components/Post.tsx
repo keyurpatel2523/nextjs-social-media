@@ -6,6 +6,14 @@ interface PostProps {
   videoUrl?: string;
   title: string;
   description: string;
+  contentUrl?: string;
+  contentType?: string;
+
+  // id: string;
+  // user_id: string;
+  // content_url?: string;
+  // text_content: string;
+  // created_at: any;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -13,6 +21,8 @@ const Post: React.FC<PostProps> = ({
   videoUrl,
   title,
   description,
+  contentUrl,
+  contentType,
 }) => {
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState<string[]>([]);
@@ -28,14 +38,14 @@ const Post: React.FC<PostProps> = ({
   return (
     <div className="bg-white shadow-md rounded-lg p-4 mb-4">
       <h2 className="text-xl font-semibold mb-2">{title}</h2>
-      {imageUrl && (
+      {contentType === "image" && (
         <img
           src={imageUrl}
           alt="Post Image"
           className="w-full rounded-lg mb-2"
         />
       )}
-      {videoUrl && (
+      {contentType === "video" && (
         <div className="w-full rounded-lg mb-2">
           <video controls className="w-full">
             <source src={videoUrl} type="video/mp4" />
