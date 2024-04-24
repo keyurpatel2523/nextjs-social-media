@@ -19,11 +19,11 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
       {posts.map((post) => (
         <Post
           key={post.id}
-          imageUrl={post.content_url}
-          videoUrl={post.content_url}
+          contentUrl={post.content_url}
           title={post.text_content}
           contentType={post.content_type}
           description={post.text_content}
+          postTime={post.created_at}
         />
       ))}
     </div>

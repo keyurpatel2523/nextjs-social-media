@@ -7,6 +7,7 @@ import { auth } from "../firebase/firebaseAuth";
 const bcrypt = require("bcrypt");
 import { unstable_noStore as noStore } from "next/cache";
 import { SocialPostTable } from "./definitions";
+import { formatDateToLocal } from "./utils";
 
 export type State = {
   errors?: {
@@ -56,10 +57,13 @@ export async function fetchAllPost() {
         text_content,
         created_at
       FROM social_posts
-      ORDER BY created_at ASC
+      ORDER BY created_at DESC
     `;
 
-    const allPosts = data.rows;
+    const allPosts = data.rows.map((post) => ({
+      ...post,
+      created_at: formatDateToLocal(post.created_at),
+    }));
     return allPosts;
   } catch (err) {
     console.error("Database Error:", err);
